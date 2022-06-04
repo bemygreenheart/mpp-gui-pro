@@ -17,13 +17,6 @@ public class Router {
         return INSTANCE;
     }
 
-    public void openLoginWindow(JFrame currentWindow) {
-        currentWindow.dispose();
-        loginWindow = new LoginWindow();
-        loginWindow.setVisible(true);
-        loginWindow.draw();
-    }
-
     public void openMainWindow(JFrame currentWindow) {
         currentWindow.dispose();
         mainMenuWindow = new MainMenuWindow();

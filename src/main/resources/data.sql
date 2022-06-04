@@ -11,16 +11,19 @@ insert into person(id, first_name, last_name, phone, address_id) values(2004, 'G
 insert into person(id, first_name, last_name, phone, address_id) values(2005, 'Donald', 'Trump', '5678901', 1002);
 insert into person(id, first_name, last_name, phone, address_id) values(2006, 'Escobar', 'Pablo', '6789012', 1003);
 
+
 -- Insert into book
 insert into book(id, isbn, title, max_checkout_length) values(3001, 'AB121', 'Dark Moon', 21);
 insert into book(id, isbn, title, max_checkout_length) values(3002, 'AB122', 'Dark Moon', 21);
 insert into book(id, isbn, title, max_checkout_length) values(3003, 'AB123', 'Dark Moon', 21);
 insert into book(id, isbn, title, max_checkout_length) values(3004, 'AB124', 'Dark Moon', 7);
 
+
 -- Insert into authors
 insert into author(id, bio, book_id, person_id) values(4001, 'Nothing special', 3001, 2001);
 insert into author(id, bio, book_id, person_id) values(4002, 'Very talented but arrogant', 3002, 2002);
 insert into author(id, bio, book_id, person_id) values(4003, 'Nothing special', 3003, 2003);
+
 
 -- Inserting into book_copy
 insert into book_copy(copy_num, book_id, is_available) values(5001, 3001,true);

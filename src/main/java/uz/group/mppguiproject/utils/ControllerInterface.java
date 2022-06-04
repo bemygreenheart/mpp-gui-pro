@@ -1,4 +1,4 @@
-package uz.group.mppguiproject;
+package uz.group.mppguiproject.utils;
 
 import java.util.List;
 

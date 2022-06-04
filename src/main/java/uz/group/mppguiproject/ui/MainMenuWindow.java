@@ -1,6 +1,7 @@
 package uz.group.mppguiproject.ui;
 
 import org.springframework.stereotype.Component;
+import uz.group.mppguiproject.config.Session;
 import uz.group.mppguiproject.config.WindowConfig;
 import uz.group.mppguiproject.entity.Role;
 
@@ -9,7 +10,6 @@ import java.awt.*;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 
 @Component
@@ -17,6 +17,9 @@ public class MainMenuWindow extends JFrame implements Drawable {
 
     public void draw() {
         Role userRole = Role.BOTH;
+        if (Session.getInstance() != null)
+            userRole= Session.getInstance().getRole();
+
         this.setSize(WindowConfig.WIDTH, WindowConfig.HEIGHT);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setResizable(false);

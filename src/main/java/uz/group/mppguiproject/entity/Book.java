@@ -1,36 +1,37 @@
 package uz.group.mppguiproject.entity;
 
-import java.io.Serializable;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
 import java.util.*;
 
 /**
  *
  */
+@Entity
+@Table(name = "book")
 final public class Book {
 
-	private static final long serialVersionUID = 6110690276685962829L;
-	private BookCopy[] copies;
+	@Id
+	private Long id;
+	@OneToMany(mappedBy = "originalBook")
+	private List<BookCopy> copies;
+	@OneToMany(mappedBy = "book")
 	private List<Author> authors;
 	private String isbn;
 	private String title;
 	private CheckoutLength maxCheckoutLength;
+
+	public Book() {
+	}
 
 	public Book(String isbn, String title, CheckoutLength maxCheckoutLength, List<Author> authors) {
 		this.isbn = isbn;
 		this.title = title;
 		this.maxCheckoutLength = maxCheckoutLength;
 		this.authors = Collections.unmodifiableList(authors);
-		copies = new BookCopy[]{new BookCopy(this, 1, true)};	
-	}
-	
-	public void updateCopies(BookCopy copy) {
-		for(int i = 0; i < copies.length; ++i) {
-			BookCopy c = copies[i];
-			if(c.equals(copy)) {
-				copies[i] = copy;
-				
-			}
-		}
+		copies = new ArrayList<>();
 	}
 
 	public List<Integer> getCopyNums() {
@@ -42,11 +43,8 @@ final public class Book {
 		
 	}
 	
-	public void addCopy() {
-		BookCopy[] newArr = new BookCopy[copies.length + 1];
-		System.arraycopy(copies, 0, newArr, 0, copies.length);
-		newArr[copies.length] = new BookCopy(this, copies.length +1, true);
-		copies = newArr;
+	public void addCopy(BookCopy copy) {
+		copies.add(copy);
 	}
 	
 	
@@ -63,7 +61,7 @@ final public class Book {
 		if(copies == null) {
 			return false;
 		}
-		return Arrays.stream(copies)
+		return copies.stream()
 				     .map(l -> l.isAvailable())
 				     .reduce(false, (x,y) -> x || y);
 	}
@@ -73,13 +71,13 @@ final public class Book {
 	}
 	
 	public int getNumCopies() {
-		return copies.length;
+		return copies.size();
 	}
 	
 	public String getTitle() {
 		return title;
 	}
-	public BookCopy[] getCopies() {
+	public List<BookCopy> getCopies() {
 		return copies;
 	}
 	
@@ -93,23 +91,44 @@ final public class Book {
 	
 	public BookCopy getNextAvailableCopy() {	
 		Optional<BookCopy> optional 
-			= Arrays.stream(copies)
+			= copies.stream()
 			        .filter(x -> x.isAvailable()).findFirst();
 		return optional.isPresent() ? optional.get() : null;
 	}
 	
-	public BookCopy getCopy(int copyNum) {
-		for(BookCopy c : copies) {
-			if(copyNum == c.getCopyNum()) {
-				return c;
-			}
-		}
-		return null;
+	public Optional<BookCopy> getCopy(int copyNum) {
+		return copies.stream().filter(c -> c.getCopyNum() == copyNum).findFirst();
 	}
 
 	public CheckoutLength getMaxCheckoutLength() {
 		return maxCheckoutLength;
 	}
-	
-	
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+	public void setCopies(List<BookCopy> copies) {
+		this.copies = copies;
+	}
+
+	public void setAuthors(List<Author> authors) {
+		this.authors = authors;
+	}
+
+	public void setIsbn(String isbn) {
+		this.isbn = isbn;
+	}
+
+	public void setTitle(String title) {
+		this.title = title;
+	}
+
+	public void setMaxCheckoutLength(CheckoutLength maxCheckoutLength) {
+		this.maxCheckoutLength = maxCheckoutLength;
+	}
 }
