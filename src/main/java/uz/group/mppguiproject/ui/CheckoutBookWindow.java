@@ -23,18 +23,40 @@ public class CheckoutBookWindow extends JFrame implements Drawable{
         this.setTitle("Checkout Book");
         WindowConfig.centerFrameOnDesktop(this);
 
-        JPanel mainPanel = new JPanel(new GridLayout(2, 1, WindowConfig.MGAP, WindowConfig.LGAP));
-        mainPanel.setBorder(BorderFactory.createEmptyBorder(WindowConfig.LGAP, WindowConfig.LGAP, WindowConfig.LGAP, WindowConfig.LGAP));
-        this.add(mainPanel, BorderLayout.CENTER);
+        SpringLayout layout = new SpringLayout();
+        JPanel container = new JPanel();
+        container.setLayout(layout);
+        this.add(container);
 
-        drawSectionedPanel( mainPanel, "Checkout Book", new String[] {"MemberId", "Book ISBN"});
-        drawButton("Checkout Book", ev -> {
+        JButton backButton = getButton("<Back");
+        container.add(backButton);
+        layout.putConstraint(SpringLayout.NORTH, backButton, 8, SpringLayout.NORTH, container);
+        layout.putConstraint(SpringLayout.WEST, backButton, 50, SpringLayout.WEST, container);
+        backButton.addActionListener(e -> {
+            Router.getInstance().openMainWindow(this);
+        });
+
+        JButton addButton = getButton("Checkout Book", ev -> {
             boolean isValid = validateFields();
 
             if(isValid){
                 //
             }
         });
+        container.add(addButton);
+        layout.putConstraint(SpringLayout.SOUTH, addButton, -20, SpringLayout.SOUTH, container);
+        layout.putConstraint(SpringLayout.HORIZONTAL_CENTER, addButton, 0, SpringLayout.HORIZONTAL_CENTER, container);
+
+        JPanel mainPanel = new JPanel(new GridLayout(2, 1, WindowConfig.MGAP, WindowConfig.LGAP));
+        mainPanel.setBorder(BorderFactory.createEmptyBorder(WindowConfig.LGAP, WindowConfig.LGAP, WindowConfig.LGAP, WindowConfig.LGAP));
+        container.add(mainPanel);
+
+        layout.putConstraint(SpringLayout.NORTH, mainPanel, 8, SpringLayout.SOUTH, backButton);
+        layout.putConstraint(SpringLayout.SOUTH, mainPanel, -30, SpringLayout.NORTH, addButton);
+        layout.putConstraint(SpringLayout.WEST, mainPanel, 50, SpringLayout.WEST, container);
+        layout.putConstraint(SpringLayout.EAST, mainPanel, -50, SpringLayout.EAST, container);
+
+        drawSectionedPanel(mainPanel, "Checkout Book", new String[] {"MemberId", "Book ISBN"});
     }
 
     private void drawSectionedPanel(JPanel panel, String sectionLabel, String[] fields){
@@ -72,13 +94,16 @@ public class CheckoutBookWindow extends JFrame implements Drawable{
         return container;
     }
 
-    private void drawButton(String label, ActionListener listener){
+    private JButton getButton(String label){
+        JButton button = new JButton(label);
+        return button;
+    }
+
+    private JButton getButton(String label, ActionListener listener){
         JButton button = new JButton(label);
         button.addActionListener(listener);
         button.setForeground(Color.GREEN);
-        button.setHorizontalAlignment(SwingConstants.CENTER);
-
-        this.add(button, BorderLayout.SOUTH);
+        return button;
     }
 
     private boolean validateFields(){

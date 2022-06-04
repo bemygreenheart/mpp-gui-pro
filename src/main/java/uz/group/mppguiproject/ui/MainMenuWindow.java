@@ -76,10 +76,7 @@ public class MainMenuWindow extends JFrame implements Drawable {
         });
 
         JButton addMemberBtn = getButton("Add Member", ev -> {
-            AddMemberWindow addMemberWindow = new AddMemberWindow();
-            this.dispose();
-            addMemberWindow.setVisible(true);
-            addMemberWindow.draw();
+            Router.getInstance().openAddMemberWindow(this);
         });
 
         JButton addBookBtn = getButton("Add Book", ev -> {

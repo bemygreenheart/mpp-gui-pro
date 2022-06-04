@@ -101,10 +101,7 @@ public class LoginWindow extends JFrame implements Drawable{
         } else if (password == null || password.strip().length() == 0) {
             showMessage("Please enter the password.\n");
         } else {
-            MainMenuWindow mainMenuWindow = new MainMenuWindow();
-            this.dispose();
-            mainMenuWindow.setVisible(true);
-            mainMenuWindow.draw();
+            Router.getInstance().openMainWindow(this);
         }
     }
 }

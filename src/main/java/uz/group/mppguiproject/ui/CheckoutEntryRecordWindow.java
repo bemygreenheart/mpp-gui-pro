@@ -17,7 +17,7 @@ public class CheckoutEntryRecordWindow extends JFrame implements Drawable{
     private final String[] columns = {  "ID", "Name", "Checkout Date", "Due Date", "Return Date" };
     private final DefaultTableModel tableModel = new DefaultTableModel(columns, 0);
     public void draw(){
-        idField = new JTextField();
+        idField = new JTextField(12);
         this.setSize(WindowConfig.WIDTH, WindowConfig.HEIGHT);
         this.setLayout(new BorderLayout());
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -30,6 +30,20 @@ public class CheckoutEntryRecordWindow extends JFrame implements Drawable{
         this.add(mainPanel, BorderLayout.CENTER);
         drawTopSearchbar();
         drawTable(mainPanel);
+
+        SpringLayout layout = new SpringLayout();
+        JPanel container = new JPanel();
+        container.setLayout(layout);
+        mainPanel.add(container);
+
+        JButton backButton = getButton("<Back");
+        container.add(backButton);
+        layout.putConstraint(SpringLayout.SOUTH, backButton, 0, SpringLayout.SOUTH, container);
+        layout.putConstraint(SpringLayout.WEST, backButton, 10, SpringLayout.WEST, container);
+        backButton.addActionListener(e -> {
+            Router.getInstance().openMainWindow(this);
+        });
+
     }
 
     private void drawTopSearchbar(){
@@ -44,6 +58,11 @@ public class CheckoutEntryRecordWindow extends JFrame implements Drawable{
         panel.add(button);
 
         this.add(panel, BorderLayout.NORTH);
+    }
+
+    private JButton getButton(String label){
+        JButton button = new JButton(label);
+        return button;
     }
 
     private JButton getButton(String label, ActionListener listener){

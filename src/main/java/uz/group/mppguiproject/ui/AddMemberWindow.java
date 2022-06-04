@@ -8,6 +8,7 @@ import uz.group.mppguiproject.entity.User;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.HashMap;
 import java.util.Locale;
@@ -31,14 +32,35 @@ public class AddMemberWindow extends JFrame implements Drawable{
         this.setTitle("Add Member");
         WindowConfig.centerFrameOnDesktop(this);
 
+        SpringLayout layout = new SpringLayout();
+        JPanel container = new JPanel();
+        container.setLayout(layout);
+        this.add(container);
+
+        JPanel lowSubmitBar = makeLowSubmitBar();
+        container.add(lowSubmitBar);
+        layout.putConstraint(SpringLayout.SOUTH, lowSubmitBar, -20, SpringLayout.SOUTH, container);
+        layout.putConstraint(SpringLayout.HORIZONTAL_CENTER, lowSubmitBar, 0, SpringLayout.HORIZONTAL_CENTER, container);
+
+        JButton backButton = getButton("<Back");
+        container.add(backButton);
+        layout.putConstraint(SpringLayout.NORTH, backButton, 8, SpringLayout.NORTH, container);
+        layout.putConstraint(SpringLayout.WEST, backButton, 50, SpringLayout.WEST, container);
+        backButton.addActionListener(e -> {
+            Router.getInstance().openMainWindow(this);
+        });
+
         JPanel mainPanel = new JPanel(new GridLayout(2, 1, WindowConfig.MGAP, WindowConfig.LGAP));
         mainPanel.setBorder(BorderFactory.createEmptyBorder(WindowConfig.LGAP, WindowConfig.LGAP, WindowConfig.LGAP, WindowConfig.LGAP));
-        this.add(mainPanel);
+        container.add(mainPanel);
+
+        layout.putConstraint(SpringLayout.NORTH, mainPanel, 8, SpringLayout.SOUTH, backButton);
+        layout.putConstraint(SpringLayout.SOUTH, mainPanel, -20, SpringLayout.NORTH, lowSubmitBar);
+        layout.putConstraint(SpringLayout.WEST, mainPanel, 50, SpringLayout.WEST, container);
+        layout.putConstraint(SpringLayout.EAST, mainPanel, -50, SpringLayout.EAST, container);
 
         drawSectionedPanel( mainPanel, "Personal Info", new String[] {"Member ID", "First Name", "Last Name", "Phone"});
         drawSectionedPanel(mainPanel, "Address Info", new String[] {"State", "City", "Street", "Zip"});
-        drawLowSubmitBar();
-
     }
 
     private void drawSectionedPanel(JPanel panel, String sectionLabel, String[] fields){
@@ -76,12 +98,12 @@ public class AddMemberWindow extends JFrame implements Drawable{
         return container;
     }
 
-    private void drawLowSubmitBar(){
+    private JPanel makeLowSubmitBar(){
         String[] roles = { "None", "Librarian", "Admin", "Both" };
         roleList = new JComboBox(roles);
         roleList.setSelectedIndex(0);
 
-        JPanel panel = new JPanel(new GridLayout(1, 2, WindowConfig.LGAP, WindowConfig.MGAP));
+        JPanel panel = new JPanel(new FlowLayout());
         panel.add(roleList);
 
         JButton button = getButton("Create Member",  ev -> {
@@ -116,7 +138,7 @@ public class AddMemberWindow extends JFrame implements Drawable{
         });
 
         panel.add(button);
-        this.add(panel, BorderLayout.SOUTH);
+        return panel;
     }
 
     private boolean validateFields(){
@@ -134,7 +156,6 @@ public class AddMemberWindow extends JFrame implements Drawable{
     private JButton getButton(String label, ActionListener listener){
         JButton button = new JButton(label);
         button.addActionListener(listener);
-        button.setBorderPainted(false);
         button.setForeground(Color.GREEN);
         return button;
     }
