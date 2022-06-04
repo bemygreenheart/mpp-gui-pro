@@ -9,7 +9,7 @@ import java.util.List;
 final public class User{
 	@Id
 	@Column(name = "member_id")
-	private Long memberId;
+	private String memberId;
 
 	private String password;
 
@@ -31,7 +31,7 @@ final public class User{
 		this.password = password;
 	}
 	
-	public User(Long memberId, Role role, String firstName, String lastName, String phone, Address address) {
+	public User(String memberId, Role role, String firstName, String lastName, String phone, Address address) {
 		this.person = new Person(firstName, lastName, phone, address);
 		this.memberId = memberId;
 		this.role = role;
@@ -42,7 +42,7 @@ final public class User{
 	}
 
 
-	public Long getMemberId() {
+	public String getMemberId() {
 		return memberId;
 	}
 
@@ -56,7 +56,7 @@ final public class User{
 				", " + person.getTelephone() + " " + person.getAddress();
 	}
 
-	public void setMemberId(Long memberId) {
+	public void setMemberId(String memberId) {
 		this.memberId = memberId;
 	}
 

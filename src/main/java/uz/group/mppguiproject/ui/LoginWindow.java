@@ -1,7 +1,10 @@
 package uz.group.mppguiproject.ui;
 
 import org.springframework.stereotype.Component;
+import uz.group.mppguiproject.config.Session;
 import uz.group.mppguiproject.config.WindowConfig;
+import uz.group.mppguiproject.utils.ControllerInterface;
+import uz.group.mppguiproject.utils.LoginException;
 
 import javax.swing.*;
 import java.awt.*;
@@ -13,6 +16,14 @@ import java.util.Map;
 @Component
 public class LoginWindow extends JFrame implements Drawable{
     private Map<String, JTextField> fields = new HashMap<>();
+
+    private final Session session;
+    private final ControllerInterface controller;
+
+    public LoginWindow(Session session, ControllerInterface controller) {
+        this.session = session;
+        this.controller = controller;
+    }
 
     public void draw(){
         this.setSize(WindowConfig.WIDTH, WindowConfig.HEIGHT);
@@ -101,10 +112,16 @@ public class LoginWindow extends JFrame implements Drawable{
         } else if (password == null || password.strip().length() == 0) {
             showMessage("Please enter the password.\n");
         } else {
-            MainMenuWindow mainMenuWindow = new MainMenuWindow();
-            this.dispose();
-            mainMenuWindow.setVisible(true);
-            mainMenuWindow.draw();
+            try{
+                controller.login(userName, password);
+                MainMenuWindow mainMenuWindow = new MainMenuWindow();
+                this.dispose();
+                mainMenuWindow.setVisible(true);
+                mainMenuWindow.draw();
+            }catch(LoginException ex){
+                showMessage(ex.getMessage() + "\n");
+            }
+
         }
     }
 }
