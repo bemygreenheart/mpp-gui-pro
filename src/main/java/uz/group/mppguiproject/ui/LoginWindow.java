@@ -4,7 +4,6 @@ import org.springframework.stereotype.Component;
 import uz.group.mppguiproject.config.WindowConfig;
 
 import javax.swing.*;
-import javax.swing.border.Border;
 import java.awt.*;
 import java.awt.event.ActionListener;
 import java.util.HashMap;
@@ -14,26 +13,19 @@ import java.util.Map;
 @Component
 public class LoginWindow extends JFrame implements Drawable{
     private Map<String, JTextField> fields = new HashMap<>();
-    private JLabel warningLabel;
 
     public void draw(){
         this.setSize(WindowConfig.WIDTH, WindowConfig.HEIGHT);
         this.setLayout(new BorderLayout());
+        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        this.setResizable(false);
+        WindowConfig.centerFrameOnDesktop(this);
         JPanel mainPanel = new JPanel(new GridLayout(2, 1, WindowConfig.MGAP, WindowConfig.LGAP));
         mainPanel.setBorder(BorderFactory.createEmptyBorder(WindowConfig.LGAP, WindowConfig.LGAP, WindowConfig.LGAP, WindowConfig.LGAP));
         this.add(mainPanel, BorderLayout.CENTER);
 
-        drawTopWarningLabel();
-        drawSectionedPanel( mainPanel, "Login Page", new String[] {"Username", "Password"});
+        drawSectionedPanel(mainPanel, "Login Page", new String[] {"Username", "Password"});
         drawBottomButtons(mainPanel);
-    }
-
-    private void drawTopWarningLabel(){
-        warningLabel = new JLabel("Please enter all values");
-        warningLabel.setHorizontalAlignment(SwingConstants.CENTER);
-        warningLabel.setForeground(Color.RED);
-        warningLabel.setVisible(false);
-        this.add(warningLabel, BorderLayout.NORTH);
     }
 
     private void drawSectionedPanel(JPanel panel, String sectionLabel, String[] fields){
@@ -79,9 +71,8 @@ public class LoginWindow extends JFrame implements Drawable{
         });
         panel.add(cancelBtn);
 
-        JButton submitBtn = getButton("Submit", Color.GREEN, ev -> {
-            System.out.println(fields.get("username").getText());
-            System.out.println(fields.get("password").getText());
+        JButton submitBtn = getButton("Log In", Color.GREEN, ev -> {
+            onSubmitButtonClicked();
         });
         panel.add(submitBtn);
 
@@ -93,5 +84,27 @@ public class LoginWindow extends JFrame implements Drawable{
         button.addActionListener(listener);
         button.setForeground(color);
         return button;
+    }
+
+    private void showMessage(String message) {
+        JOptionPane.showMessageDialog(this, message);
+    }
+
+    private void onSubmitButtonClicked() {
+        String userName = fields.get("username").getText();
+        String password = fields.get("password").getText();
+        if ((userName == null || userName.strip().length() == 0) &&
+                (password == null || password.strip().length() == 0)) {
+            showMessage("Please enter the username and password.\n");
+        } else if (userName == null || userName.strip().length() == 0) {
+            showMessage("Please enter the username.\n");
+        } else if (password == null || password.strip().length() == 0) {
+            showMessage("Please enter the password.\n");
+        } else {
+            MainMenuWindow mainMenuWindow = new MainMenuWindow();
+            this.dispose();
+            mainMenuWindow.setVisible(true);
+            mainMenuWindow.draw();
+        }
     }
 }
