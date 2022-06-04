@@ -108,7 +108,7 @@ public class AddMemberWindow extends JFrame implements Drawable{
                 Address address = new Address(values.get("street"), values.get("city"), values.get("state"), values.get("zip"));
 //            Save the address
                 User user = new User(
-                        values.get("member_id"),
+                        Long.valueOf(values.get("member_id")),
                         role,
                         values.get("first_name"),
                         values.get("last_name"),

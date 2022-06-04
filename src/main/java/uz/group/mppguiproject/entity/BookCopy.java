@@ -1,18 +1,28 @@
 package uz.group.mppguiproject.entity;
 
+import javax.persistence.*;
 import java.io.Serializable;
 
 /**
  * Immutable class
  */
-final public class BookCopy implements Serializable {
-	
-	private static final long serialVersionUID = -63976228084869815L;
-	private Book book;
+
+@Entity
+@Table(name = "book_copy")
+final public class BookCopy{
+
+	@Id
 	private int copyNum;
+	@ManyToOne
+	@JoinColumn(name = "book_id")
+	private Book originalBook;
 	private boolean isAvailable;
+
+	public BookCopy() {
+	}
+
 	BookCopy(Book book, int copyNum, boolean isAvailable) {
-		this.book = book;
+		this.originalBook = book;
 		this.copyNum = copyNum;
 		this.isAvailable = isAvailable;
 	}
@@ -31,7 +41,7 @@ final public class BookCopy implements Serializable {
 	}
 	
 	public Book getBook() {
-		return book;
+		return originalBook;
 	}
 	
 	public void changeAvailability() {
@@ -42,7 +52,7 @@ final public class BookCopy implements Serializable {
 	public boolean equals(Object ob) {
 		if(!(ob instanceof BookCopy)) return false;
 		BookCopy copy = (BookCopy)ob;
-		return copy.book.getIsbn().equals(book.getIsbn()) && copy.copyNum == copyNum;
+		return copy.originalBook.getIsbn().equals(originalBook.getIsbn()) && copy.copyNum == copyNum;
 	}
 	
 }

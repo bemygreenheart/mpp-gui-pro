@@ -9,4 +9,8 @@ public enum CheckoutLength {
     CheckoutLength(int days) {
         this.days = days;
     }
+
+    public int getDays() {
+        return days;
+    }
 }

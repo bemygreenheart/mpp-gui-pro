@@ -1,1 +1,0 @@
-    insert into person(id, name) values(10001, 'John Doe');
