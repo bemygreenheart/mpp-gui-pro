@@ -6,6 +6,7 @@ import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import uz.group.mppguiproject.ui.CheckoutEntryRecordWindow;
+import uz.group.mppguiproject.ui.LoginWindow;
 
 import javax.swing.*;
 import java.awt.*;
@@ -21,9 +22,7 @@ public class MppGuiProjectApplication {
 				.headless(false).run(args);
 
 		EventQueue.invokeLater(() -> {
-			CheckoutEntryRecordWindow frame = ctx.getBean(CheckoutEntryRecordWindow.class);
-
-			frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+			LoginWindow frame = ctx.getBean(LoginWindow.class);
 			frame.setVisible(true);
 			frame.draw();
 		});
