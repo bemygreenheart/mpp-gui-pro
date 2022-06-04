@@ -5,8 +5,7 @@ import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
-import uz.group.mppguiproject.ui.CheckoutBook;
-import uz.group.mppguiproject.ui.CheckoutEntryRecord;
+import uz.group.mppguiproject.ui.CheckoutEntryRecordWindow;
 
 import javax.swing.*;
 import java.awt.*;
@@ -22,7 +21,7 @@ public class MppGuiProjectApplication {
 				.headless(false).run(args);
 
 		EventQueue.invokeLater(() -> {
-			CheckoutEntryRecord frame = ctx.getBean(CheckoutEntryRecord.class);
+			CheckoutEntryRecordWindow frame = ctx.getBean(CheckoutEntryRecordWindow.class);
 
 			frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 			frame.setVisible(true);

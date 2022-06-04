@@ -11,7 +11,7 @@ import java.util.Locale;
 import java.util.Map;
 
 @Component
-public class AddBook extends JFrame implements Drawable{
+public class AddBookWindow extends JFrame implements Drawable{
 
     private Map<String, JTextField> fields = new HashMap<>();
     private JLabel warningLabel;
