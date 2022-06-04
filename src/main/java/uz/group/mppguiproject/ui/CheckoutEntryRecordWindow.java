@@ -20,6 +20,11 @@ public class CheckoutEntryRecordWindow extends JFrame implements Drawable{
         idField = new JTextField();
         this.setSize(WindowConfig.WIDTH, WindowConfig.HEIGHT);
         this.setLayout(new BorderLayout());
+        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        this.setResizable(false);
+        this.setTitle("Checkout Entry Record");
+        WindowConfig.centerFrameOnDesktop(this);
+
         JPanel mainPanel = new JPanel(new GridLayout(2, 1, WindowConfig.MGAP, WindowConfig.LGAP));
         mainPanel.setBorder(BorderFactory.createEmptyBorder(WindowConfig.LGAP, WindowConfig.LGAP, WindowConfig.LGAP, WindowConfig.LGAP));
         this.add(mainPanel, BorderLayout.CENTER);

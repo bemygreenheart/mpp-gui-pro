@@ -20,7 +20,6 @@ public class MainMenuWindow extends JFrame implements Drawable {
         this.setSize(WindowConfig.WIDTH, WindowConfig.HEIGHT);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setResizable(false);
-
         WindowConfig.centerFrameOnDesktop(this);
 
         String message = "Welcome ";
@@ -63,23 +62,38 @@ public class MainMenuWindow extends JFrame implements Drawable {
         List<JButton> buttons = new ArrayList<JButton>();
 
         JButton checkoutBookBtn = getButton("Checkout Book", ev -> {
-            System.out.println("Check Book Pressed");
+            CheckoutBookWindow checkoutBookWindow = new CheckoutBookWindow();
+            this.dispose();
+            checkoutBookWindow.setVisible(true);
+            checkoutBookWindow.draw();
         });
 
         JButton printCheckoutRecordBtn = getButton("Print Checkout Record", ev -> {
-            System.out.println("Check Book Pressed");
+            CheckoutEntryRecordWindow checkoutEntryRecordWindow = new CheckoutEntryRecordWindow();
+            this.dispose();
+            checkoutEntryRecordWindow.setVisible(true);
+            checkoutEntryRecordWindow.draw();
         });
 
         JButton addMemberBtn = getButton("Add Member", ev -> {
-            System.out.println("Check Book Pressed");
+            AddMemberWindow addMemberWindow = new AddMemberWindow();
+            this.dispose();
+            addMemberWindow.setVisible(true);
+            addMemberWindow.draw();
         });
 
         JButton addBookBtn = getButton("Add Book", ev -> {
-            System.out.println("Check Book Pressed");
+            AddBookWindow addBookWindow = new AddBookWindow();
+            this.dispose();
+            addBookWindow.setVisible(true);
+            addBookWindow.draw();
         });
 
         JButton addBookCopyBtn = getButton("Add Book Copy", ev -> {
-            System.out.println("Check Book Pressed");
+            AddBookCopyWindow addBookCopyWindow = new AddBookCopyWindow();
+            this.dispose();
+            addBookCopyWindow.setVisible(true);
+            addBookCopyWindow.draw();
         });
 
         if(role != null){

@@ -22,29 +22,25 @@ public class AddMemberWindow extends JFrame implements Drawable{
 
     private Map<String, JTextField> fields = new HashMap<>();
     private JComboBox roleList;
-    private JLabel warningLabel;
 
     public void draw(){
         this.setSize(WindowConfig.WIDTH, WindowConfig.HEIGHT);
         this.setLayout(new BorderLayout());
+        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        this.setResizable(false);
+        this.setTitle("Add Member");
+        WindowConfig.centerFrameOnDesktop(this);
+
         JPanel mainPanel = new JPanel(new GridLayout(2, 1, WindowConfig.MGAP, WindowConfig.LGAP));
         mainPanel.setBorder(BorderFactory.createEmptyBorder(WindowConfig.LGAP, WindowConfig.LGAP, WindowConfig.LGAP, WindowConfig.LGAP));
-        this.add(mainPanel, BorderLayout.CENTER);
+        this.add(mainPanel);
 
-        drawTopWarningLabel();
         drawSectionedPanel( mainPanel, "Personal Info", new String[] {"Member ID", "First Name", "Last Name", "Phone"});
         drawSectionedPanel(mainPanel, "Address Info", new String[] {"State", "City", "Street", "Zip"});
         drawLowSubmitBar();
 
     }
 
-    private void drawTopWarningLabel(){
-        warningLabel = new JLabel("Please enter all values");
-        warningLabel.setHorizontalAlignment(SwingConstants.CENTER);
-        warningLabel.setForeground(Color.RED);
-        warningLabel.setVisible(false);
-        this.add(warningLabel, BorderLayout.NORTH);
-    }
     private void drawSectionedPanel(JPanel panel, String sectionLabel, String[] fields){
         JPanel section = new JPanel(new GridLayout(2, 1, 0, WindowConfig.LGAP));//Insert Gap to correct style
 
@@ -88,12 +84,11 @@ public class AddMemberWindow extends JFrame implements Drawable{
         JPanel panel = new JPanel(new GridLayout(1, 2, WindowConfig.LGAP, WindowConfig.MGAP));
         panel.add(roleList);
 
-        JButton button = getButton("Create Member", ev -> {
+        JButton button = getButton("Create Member",  ev -> {
             if(!validateFields()){
                 System.out.println("Working");
-                warningLabel.setVisible(true);
-            }else {
-                warningLabel.setVisible(false);
+                showMessage("Please enter all values");
+            } else {
                 Map<String, String> values = fields.entrySet()
                         .stream()
                         .collect(Collectors.toMap(Map.Entry::getKey,
@@ -140,7 +135,11 @@ public class AddMemberWindow extends JFrame implements Drawable{
         JButton button = new JButton(label);
         button.addActionListener(listener);
         button.setBorderPainted(false);
-        button.setBackground(Color.GREEN);
+        button.setForeground(Color.GREEN);
         return button;
+    }
+
+    private void showMessage(String message) {
+        JOptionPane.showMessageDialog(this, message);
     }
 }

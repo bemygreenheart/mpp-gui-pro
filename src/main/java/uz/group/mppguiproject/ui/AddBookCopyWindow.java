@@ -13,33 +13,27 @@ import java.util.Map;
 @Component
 public class AddBookCopyWindow extends JFrame implements Drawable {
     private Map<String, JTextField> fields = new HashMap<>();
-    private JLabel warningLabel;
 
         public void draw(){
             this.setSize(WindowConfig.WIDTH, WindowConfig.HEIGHT);
             this.setLayout(new BorderLayout());
+            this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+            this.setResizable(false);
+            this.setTitle("Add Book Copy");
+            WindowConfig.centerFrameOnDesktop(this);
             JPanel mainPanel = new JPanel(new GridLayout(2, 1, WindowConfig.MGAP, WindowConfig.LGAP));
             mainPanel.setBorder(BorderFactory.createEmptyBorder(WindowConfig.LGAP, WindowConfig.LGAP, WindowConfig.LGAP, WindowConfig.LGAP));
             this.add(mainPanel, BorderLayout.CENTER);
 
-            drawTopWarningLabel();
             drawSectionedPanel( mainPanel, "Add Book Copy", new String[] {"ISBN", "Copy Number"});
             drawButton("Add Copy", ev -> {
                 boolean isValid = validateFields();
 
                 if(isValid){
-                    warningLabel.setText("");
-
+                    //
                 }
             });
         }
-
-    private void drawTopWarningLabel(){
-        warningLabel = new JLabel("");
-        warningLabel.setHorizontalAlignment(SwingConstants.CENTER);
-        warningLabel.setForeground(Color.RED);
-        this.add(warningLabel, BorderLayout.NORTH);
-    }
 
     private void drawSectionedPanel(JPanel panel, String sectionLabel, String[] fields){
         JPanel section = new JPanel(new GridLayout(2, 1, WindowConfig.LGAP, WindowConfig.LGAP));//Insert Gap to correct style
@@ -89,12 +83,15 @@ public class AddBookCopyWindow extends JFrame implements Drawable {
     private boolean validateFields(){
            for(var entry:  fields.entrySet()){
                if(entry.getValue().getText().isEmpty()){
-                warningLabel.setText(entry.getKey() + " can not be empty");
+                showMessage(entry.getKey() + " can not be empty");
                 return false;
                }
            }
            return true;
     }
 
+    private void showMessage(String message) {
+        JOptionPane.showMessageDialog(this, message);
+    }
 
 }
