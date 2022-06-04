@@ -10,6 +10,8 @@ insert into person(id, first_name, last_name, phone, address_id) values(2003, 'K
 insert into person(id, first_name, last_name, phone, address_id) values(2004, 'George', 'Bush', '4567890', 1002);
 insert into person(id, first_name, last_name, phone, address_id) values(2005, 'Donald', 'Trump', '5678901', 1002);
 insert into person(id, first_name, last_name, phone, address_id) values(2006, 'Escobar', 'Pablo', '6789012', 1003);
+insert into person(id, first_name, last_name, phone, address_id) values(2007, 'Escobar', 'Pablo', '6789012', 1003);
+
 
 
 -- Insert into book
@@ -39,6 +41,7 @@ insert into book_copy(copy_num, book_id, is_available) values(5008, 3004,true);
 insert into users(member_id, password, role, person_id) values(1111, 'admin', 'ADMIN', 2004);
 insert into users(member_id, password, role, person_id) values(2222, 'lib', 'LIBRARIAN', 2005);
 insert into users(member_id, password, role, person_id) values(3333, 'nothing', null, 2006);
+insert into users(member_id, password, role, person_id) values(4444, 'both', 'BOTH', 2007);
 
 -- Insert insert checkout_entry
 insert into checkout_entry(id, checkout_date, due_date, return_date, user_id, copy_id) values(7001, '2020-07-10', '2020-07-31', '2020-07-28', 3333, 5001);

@@ -1,10 +1,12 @@
 package uz.group.mppguiproject.ui;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import uz.group.mppguiproject.config.WindowConfig;
 import uz.group.mppguiproject.entity.Address;
 import uz.group.mppguiproject.entity.Role;
 import uz.group.mppguiproject.entity.User;
+import uz.group.mppguiproject.repos.BookRepository;
 
 import javax.swing.*;
 import java.awt.*;
@@ -18,8 +20,8 @@ import java.util.stream.Collectors;
 @Component
 public class AddMemberWindow extends JFrame implements Drawable{
 
-//    @Autowired
-//    private PersonRepository personRepository;
+    @Autowired
+    private BookRepository bookRepository;
 
     private Map<String, JTextField> fields = new HashMap<>();
     private JComboBox roleList;
@@ -162,5 +164,9 @@ public class AddMemberWindow extends JFrame implements Drawable{
 
     private void showMessage(String message) {
         JOptionPane.showMessageDialog(this, message);
+    }
+
+    private void addMember() {
+
     }
 }

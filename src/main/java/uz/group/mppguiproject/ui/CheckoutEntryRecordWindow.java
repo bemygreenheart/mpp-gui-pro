@@ -14,7 +14,14 @@ public class CheckoutEntryRecordWindow extends JFrame implements Drawable{
 
     private JTextField idField;
 
-    private final String[] columns = {  "ID", "Name", "Checkout Date", "Due Date", "Return Date" };
+    private final String[] columns = {"ID", "Name", "Checkout Date", "Due Date", "Return Date" };
+
+    private final String[][] datas = {
+            {"3001", "The Big Fish", "2022-06-02", "2022-06-10", "2022-06-04" },
+            {"3002", "Antartica", "2022-06-02", "2022-06-12", "2022-06-03" },
+            {"3004", "Thinking Java", "2022-06-02", "2022-07-02", "2022-06-03" },
+            {"3007", "Jimmy's First Day of School", "2022-06-02", "2022-07-02", "2022-06-04" }
+    };
     private final DefaultTableModel tableModel = new DefaultTableModel(columns, 0);
     public void draw(){
         idField = new JTextField(12);
@@ -43,7 +50,6 @@ public class CheckoutEntryRecordWindow extends JFrame implements Drawable{
         backButton.addActionListener(e -> {
             Router.getInstance().openMainWindow(this);
         });
-
     }
 
     private void drawTopSearchbar(){
@@ -53,7 +59,9 @@ public class CheckoutEntryRecordWindow extends JFrame implements Drawable{
         panel.add(new JLabel("Enter member id:"));
         panel.add(idField);
         JButton button = getButton("Search", ev -> {
-            addTableRecord(new String[]{"1", "2", "1", "2", "3","4"});
+            for (int d = 0; d < datas.length; d++) {
+                addTableRecord(datas[d]);
+            }
         });
         panel.add(button);
 
